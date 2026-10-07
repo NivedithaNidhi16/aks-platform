@@ -3,7 +3,7 @@ name: Terraform
 on:
     push:
         branches:
-            - master
+            - main
 
 
 jobs:
@@ -12,6 +12,9 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+
+            - name: Setup Terraform
+              uses: hashicrop/setup-terraform@v3
 
             - name: Terraform Format Check
               working-directory: ./infrastructure
