@@ -1,5 +1,5 @@
 subscription = "2848b0d1-a487-4669-b6ef-3dac9cf8117b"
 tenant       = "e04e9f50-006e-4eaa-ab0b-e804b0c7b7d1"
-location     = "southeastasia"
+location     = "australiasoutheast"
 env          = "prod"
 proj         = "niv-aks"
