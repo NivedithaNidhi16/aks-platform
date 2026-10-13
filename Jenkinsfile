@@ -5,8 +5,14 @@ pipeline{
     stages{
         stage('Checkout'){
             steps{
-                echo "Checout to source code from github"
+                echo "Checking out to source code from github"
                 checkout scm
+            }
+        }
+        stage('Test'){
+            steps{
+                echo "Run the test cases"
+                sh "python3 --version"
             }
         }
     }
