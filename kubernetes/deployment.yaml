@@ -1,46 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: aks-app
   namespace: aks-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: nginx
+      app: aks-app
   template:
     metadata:
       labels:
-        app: nginx
+        app: aks-app
     spec:
       containers:
-        - name: nginx-container
-          image: nginx:stable
+        - name: aks-app
+          image: nivacrseukr.azurecr.io/aks-app:latest
           ports:
-            - containerPort: 80
+            - containerPort: 5000
           readinessProbe:
             httpGet:
-              path: /
-              port: 80
+              path: /health
+              port: 5000
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 2
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /
-              port: 80
+              path: /health
+              port: 5000
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 2
             failureThreshold: 3
 
 
-          envFrom:
-            - configMapRef:
-                name: nginx-configmap
-            - secretRef:
-                name: app-secret
+          # envFrom:
+          #   - configMapRef:
+          #       name: nginx-configmap
+          #   - secretRef:
+          #       name: app-secret
 
           resources:
             requests:
