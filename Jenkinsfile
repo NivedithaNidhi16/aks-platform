@@ -29,5 +29,26 @@ pipeline {
                 }
             }
         }
+        stage('Push'){
+            steps{
+                echo "Docker image to be pushed to ACR registry"
+                withCredentials([usernamePassword(
+                    credentialsId: 'azure-sp-acr',
+                    usernameVariable: 'AZURE_CLIENT_ID',
+                    passwordVariable: 'AZURE_CLIENT_SECRET'
+                )]){
+                    sh '''
+                    set +x
+                    echo "$AZURE_CLIENT_SECRET" | docker login  nivacrseukr.azurecr.io --username "$AZURE_CLIENT_ID" --password-stdin
+
+                     docker tag aks-app:latest nivacrseukr.azurecr.io/aks-app:${BUILD_NUMBER}
+
+                docker push nivacrseukr.azurecr.io/aks-app:${BUILD_NUMBER}
+
+                docker logout nivacrseukr.azurecr.io
+                '''
+                }
+            }
+        }
     }
 }
